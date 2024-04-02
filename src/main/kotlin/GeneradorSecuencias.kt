@@ -1,13 +1,34 @@
-class GeneradorSecuencias(var sec: MutableList<Int>) {
+class GeneradorSecuencias(private val consola: Consola) {
+    private lateinit var sec: Sequence<String>
 
-    fun lineSequence(limit: Int = Int.MAX_VALUE) = generateSequence { readln().constrainOnce().take(limit) }
+    private fun lineSequence(limit: Int = Int.MAX_VALUE) = generateSequence { readln() }.constrainOnce().take(limit)
 
-    fun fraseIncremental() {}
+    fun fraseIncremental(num: Int) {
+        sec = lineSequence(num)
+        var frase = ""
 
-    fun fraseFinal() {}
+        for (palabra in sec) {
+            frase += palabra
+            consola.salidaDatos(frase)
+        }
+    }
 
-    fun getSec() {}
+    fun fraseFinal(num: Int) {
+        sec = lineSequence(num)
+        var frase = ""
 
-    fun mostrarSec() {}
+        for (palabra in sec) {
+            frase += palabra
+        }
+        consola.salidaDatos(frase)
+    }
+
+    private fun getSec(): String {
+        return sec.toList().joinToString { " " }
+    }
+
+    fun mostrarSec() {
+        consola.salidaDatos(getSec(), false)
+    }
 
 }
